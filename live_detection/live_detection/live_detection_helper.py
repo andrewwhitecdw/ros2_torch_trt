@@ -73,23 +73,26 @@ class DetectionNode(Node):
         detection_array = Detection2DArray()
         
         for i in range(boxes.size(0)):
-            box = boxes[i, :]
-            label = f"{self.class_names[labels[i]]}: {probs[i]:.2f}"
-            print("Object: " + str(i) + " " + label)
+            box = boxes[i, :].detach().cpu().numpy().astype(int)
+            class_id = int(labels[i].item())
+            score = float(probs[i].item())
+            label = f'{self.class_names[class_id]}: {score:.2f}'
+            print('Object: ' + str(i) + ' ' + label)
             cv2.rectangle(cv_image, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
 
             # Definition of 2D array message and ading all object stored in it.
             object_hypothesis_with_pose = ObjectHypothesisWithPose()
-            object_hypothesis_with_pose.id = str(self.class_names[labels[i]])
-            object_hypothesis_with_pose.score = float(probs[i])
+            object_hypothesis_with_pose.id = str(self.class_names[class_id])
+            object_hypothesis_with_pose.score = score
 
             bounding_box = BoundingBox2D()
-            bounding_box.center.x = float((box[0] + box[2])/2)
-            bounding_box.center.y = float((box[1] + box[3])/2)
+            x1, y1, x2, y2 = box.astype(float)
+            bounding_box.center.x = (x1 + x2) / 2.0
+            bounding_box.center.y = (y1 + y2) / 2.0
             bounding_box.center.theta = 0.0
             
-            bounding_box.size_x = float(2*(bounding_box.center.x - box[0]))
-            bounding_box.size_y = float(2*(bounding_box.center.y - box[1]))
+            bounding_box.size_x = 2.0 * (bounding_box.center.x - x1)
+            bounding_box.size_y = 2.0 * (bounding_box.center.y - y1)
 
             detection = Detection2D()
             detection.header = data.header
@@ -101,7 +104,7 @@ class DetectionNode(Node):
 
 
             cv2.putText(cv_image, label,
-                       (box[0]+20, box[1]+40),
+                       (int(box[0]+20), int(box[1]+40)),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         1,  # font scale
                        (255, 0, 255), 2)  # line type
