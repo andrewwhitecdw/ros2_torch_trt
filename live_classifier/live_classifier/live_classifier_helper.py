@@ -111,7 +111,7 @@ class WebcamClassifier(Node):
 
         percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
 
-        return self.labels[index[0]] , percentage[index[0]].item()
+        return self.labels[index[0].item()] , percentage[index[0]].item()
         
 
     def listener_callback(self, msg):
