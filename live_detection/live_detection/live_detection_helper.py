@@ -32,7 +32,6 @@ class DetectionNode(Node):
 
         # Create a subscriber to the Image topic
         self.subscription = self.create_subscription(Image, 'image', self.listener_callback, 10)
-        self.subscription  # prevent unused variable warning
         self.bridge = CvBridge()
 
         # Create a Detection 2D array topic to publish results on
