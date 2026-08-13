@@ -12,15 +12,19 @@ from trt_live_classifier.trt_classifier_helper import TRTWebcamClassifier
 def main(args=None):
     rclpy.init(args=args)
 
-    trt_webcam_classifier = TRTWebcamClassifier()
+    trt_webcam_classifier = None
+    try:
+        trt_webcam_classifier = TRTWebcamClassifier()
+        rclpy.spin(trt_webcam_classifier)
+    finally:
+        if trt_webcam_classifier is not None:
+            # Destroy the node explicitly
+            # (optional - otherwise it will be done automatically
+            # when the garbage collector destroys the node object)
+            trt_webcam_classifier.destroy_node()
+        if rclpy.ok():
+            rclpy.shutdown()
 
-    rclpy.spin(trt_webcam_classifier)
-
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    trt_webcam_classifier.destroy_node()
-    rclpy.shutdown()
 
 
 if __name__ == '__main__':
