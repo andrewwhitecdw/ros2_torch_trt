@@ -31,8 +31,8 @@ def save_checkpoint(epoch, net_state_dict, optimizer_state_dict, best_score, che
     torch.save(net_state_dict, model_path)
         
         
-def load_checkpoint(checkpoint_path):
-    return torch.load(checkpoint_path)
+def load_checkpoint(checkpoint_path, map_location='cpu'):
+    return torch.load(checkpoint_path, map_location=map_location)
 
 
 def freeze_net_layers(net):
