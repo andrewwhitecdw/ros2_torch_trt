@@ -29,6 +29,9 @@ def generate_ssd_priors(specs: List[SSDSpec], image_size, clamp=True) -> torch.T
         priors (num_priors, 4): The prior boxes represented as [[center_x, center_y, w, h]]. All the values
             are relative to the image size.
     """
+    if image_size <= 0:
+        raise ValueError(f"image_size must be positive, got {image_size}")
+
     priors = []
     for spec in specs:
         scale = image_size / spec.shrinkage
