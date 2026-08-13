@@ -276,7 +276,7 @@ def soft_nms(box_scores, score_threshold, sigma=0.5, top_k=-1):
     picked_box_scores = []
     while box_scores.size(0) > 0:
         max_score_index = torch.argmax(box_scores[:, 4])
-        cur_box_prob = torch.tensor(box_scores[max_score_index, :])
+        cur_box_prob = box_scores[max_score_index, :].clone()
         picked_box_scores.append(cur_box_prob)
         if len(picked_box_scores) == top_k > 0 or box_scores.size(0) == 1:
             break
@@ -289,7 +289,7 @@ def soft_nms(box_scores, score_threshold, sigma=0.5, top_k=-1):
     if len(picked_box_scores) > 0:
         return torch.stack(picked_box_scores)
     else:
-        return torch.tensor([])
+        return torch.empty(0, box_scores.size(1), device=box_scores.device, dtype=box_scores.dtype)
 
 
 
