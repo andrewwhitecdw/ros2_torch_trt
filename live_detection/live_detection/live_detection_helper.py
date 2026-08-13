@@ -47,7 +47,8 @@ class DetectionNode(Node):
         self.model_path = os.getenv("HOME")+ '/ros2_models/mobilenet-v1-ssd-mp-0_675.pth'
         self.label_path = os.getenv("HOME") + '/ros2_models/voc-model-labels.txt'
 
-        self.class_names = [name.strip() for name in open(self.label_path).readlines()]
+        with open(self.label_path) as f:
+            self.class_names = [name.strip() for name in f.readlines()]
         self.num_classes = len(self.class_names)
         
         self.net = create_mobilenetv1_ssd(len(self.class_names), is_test=True)
