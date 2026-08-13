@@ -73,15 +73,17 @@ class DetectionNode(Node):
         detection_array = Detection2DArray()
         
         for i in range(boxes.size(0)):
-            box = boxes[i, :]
-            label = f"{self.class_names[labels[i]]}: {probs[i]:.2f}"
+            box = [int(v) for v in boxes[i, :]]
+            label_idx = int(labels[i])
+            prob = float(probs[i])
+            label = f"{self.class_names[label_idx]}: {prob:.2f}"
             print("Object: " + str(i) + " " + label)
             cv2.rectangle(cv_image, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
 
             # Definition of 2D array message and ading all object stored in it.
             object_hypothesis_with_pose = ObjectHypothesisWithPose()
-            object_hypothesis_with_pose.id = str(self.class_names[labels[i]])
-            object_hypothesis_with_pose.score = float(probs[i])
+            object_hypothesis_with_pose.id = str(self.class_names[label_idx])
+            object_hypothesis_with_pose.score = prob
 
             bounding_box = BoundingBox2D()
             bounding_box.center.x = float((box[0] + box[2])/2)
