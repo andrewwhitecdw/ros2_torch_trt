@@ -40,7 +40,6 @@ class WebcamClassifier(Node):
         super().__init__('webcam_classification')
         # Create a subscriber to the Image topic
         self.image_subscriber = self.create_subscription(Image, 'image', self.listener_callback, 10)
-        self.image_subscriber
 
         # create a publisher onto the vision_msgs 2D classification topic
         self.classification_publisher = self.create_publisher(Classification2D, 'classification', 10)
