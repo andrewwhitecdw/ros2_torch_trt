@@ -99,6 +99,7 @@ class TRTDetectionNode(Node):
         print('Time: {:.2f}s, Detect Objects: {:d}.'.format(interval, labels.size(0)))
 
         detection_array = Detection2DArray()
+        detection_array.header = data.header
         
         for i in range(boxes.size(0)):
             box = boxes[i, :]
