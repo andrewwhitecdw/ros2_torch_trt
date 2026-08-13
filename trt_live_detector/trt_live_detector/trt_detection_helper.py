@@ -43,8 +43,6 @@ class TRTDetectionNode(Node):
 
         # Create an Image publisher for the results
         self.result_publisher = self.create_publisher(Image,'trt_detection_image',10)
-
-        self.net_type = 'mb1-ssd'
         
         # Weights and labels locations
         self.label_path = os.getenv("HOME") + '/ros2_models/voc-model-labels.txt'
