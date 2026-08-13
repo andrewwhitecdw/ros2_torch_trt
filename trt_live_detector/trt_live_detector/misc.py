@@ -3,6 +3,7 @@ import torch
 
 
 def str2bool(s):
+    s = str(s)
     return s.lower() in ('true', '1')
 
 
