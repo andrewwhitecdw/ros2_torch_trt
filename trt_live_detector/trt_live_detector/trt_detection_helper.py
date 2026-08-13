@@ -50,8 +50,8 @@ class TRTDetectionNode(Node):
         self.label_path = os.getenv("HOME") + '/ros2_models/voc-model-labels.txt'
         trt_model_path = os.getenv("HOME") + '/ros2_models/mb1SSD_trt.pth'
 
-        self.class_names = [name.strip() for name in open(self.label_path).readlines()]
-        self.num_classes = len(self.class_names)
+        with open(self.label_path, encoding='utf-8') as f:
+            self.class_names = [name.strip() for name in f.readlines()]
         
         if (os.path.isfile(trt_model_path)):
             print("TRT Module exists, loading..")        
