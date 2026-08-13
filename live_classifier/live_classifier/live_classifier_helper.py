@@ -141,6 +141,7 @@ class WebcamClassifier(Node):
           cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
         except CvBridgeError as e:
           print(e)
+          return
         cv2.imshow('webcam_window', cv_image)
         cv2.waitKey(1)
        
