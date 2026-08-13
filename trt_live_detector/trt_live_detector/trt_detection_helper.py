@@ -90,6 +90,7 @@ class TRTDetectionNode(Node):
           cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
           print(e)
+          return
 
         
         image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
