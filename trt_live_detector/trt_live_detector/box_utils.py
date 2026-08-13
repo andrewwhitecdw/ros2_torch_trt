@@ -289,7 +289,7 @@ def soft_nms(box_scores, score_threshold, sigma=0.5, top_k=-1):
     if len(picked_box_scores) > 0:
         return torch.stack(picked_box_scores)
     else:
-        return torch.tensor([])
+        return box_scores.new_empty((0, box_scores.size(1)))
 
 
 
