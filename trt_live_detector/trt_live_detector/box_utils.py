@@ -159,7 +159,7 @@ def assign_priors(gt_boxes, gt_labels, corner_form_priors,
         priors (num_priors, 4): corner form priors
     Returns:
         boxes (num_priors, 4): real values for priors.
-        labels (num_priros): labels for priors.
+        labels (num_priors): labels for priors.
     """
     # size: num_priors x num_targets
     ious = iou_of(gt_boxes.unsqueeze(0), corner_form_priors.unsqueeze(1))
