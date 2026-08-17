@@ -160,10 +160,12 @@ class TRTWebcamClassifier(Node):
         self.classification_publisher.publish(classification)
        
         # Use OpenCV to visualize the images being classified from webcam 
+        cv_image = None
         try:
           cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        except CvBridgeError as e:
+        except Exception as e:
           print(e)
-        cv2.imshow('webcam_window', cv_image)
-        cv2.waitKey(1)
+        if cv_image is not None:
+          cv2.imshow('webcam_window', cv_image)
+          cv2.waitKey(1)
        
