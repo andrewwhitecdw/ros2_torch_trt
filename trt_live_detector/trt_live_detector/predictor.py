@@ -38,7 +38,7 @@ class Predictor:
             print("Inference time: ", self.timer.end())
         boxes = boxes[0]
         scores = scores[0]
-        if not prob_threshold:
+        if prob_threshold is None:
             prob_threshold = self.filter_threshold
         # this version of nms is slower on GPU, so we move data to CPU.
         boxes = boxes.to(cpu_device)
